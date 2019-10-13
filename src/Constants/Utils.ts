@@ -95,14 +95,14 @@ export const darkTheme = [
   "--bar: #ecfcff",
   "--compared: #ff6361",
   "--swapped: #4ecca3",
-  "--background: #001e3d"
+  "--background: #0B2239"
 ];
 export const lightTheme = [
   "--sidebar: #90b8f8",
   "--copyOtherSidebar: #182952",
   "--title: #232931",
   "--start: #182952",
-  "--bar: #001e3d",
+  "--bar: #0B2239",
   "--compared: #ff6361",
   "--swapped: #4ecca3",
   "--background: #ecfcff"
