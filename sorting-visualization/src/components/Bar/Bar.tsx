@@ -1,31 +1,20 @@
 import React from "react";
 import styled from "styled-components";
-import { interpolateSpeed } from "../../Constants/Utils";
-
-const mapPropsToMargin = (total: number): string => {
-  const margin = 100 / total;
-  return "0px";
-  //return `${margin}px`;
-};
-
-const mapPropsToWidth = (total: number): string => {
-  const totalMargin = (100 / total) * 2;
-  return `calc(75vw / ${total})`;
-};
-
-const mapPropsToLeft = (index: number, total: number): string => {
-  const position = index / total;
-  return `calc(25vw + (75vw * ${position}))`;
-};
+import {
+  interpolateSpeed,
+  useWindowDimensions,
+  MIN_VALUE_DISPLAY_FACTOR
+} from "../../Constants/Utils";
+import { IBar } from "../../Constants/ActionTypes";
 
 const mapPropsToColor = (isCompared: boolean, isSwapped: boolean): string => {
   if (isCompared) {
-    return "red";
+    return "var(--compared)";
   }
   if (isSwapped) {
-    return "blue";
+    return "var(--swapped)";
   }
-  return "black";
+  return "var(--copyOtherSidebar)";
 };
 
 const mapPropsToTransition = (speed: string): string => {
@@ -33,59 +22,49 @@ const mapPropsToTransition = (speed: string): string => {
   return `all ease-in-out ${minInterval}ms`;
 };
 
-const Container = styled.div<ContainerProps>`
-  position: absolute;
+const Container = styled.div<IBarContainerProps>`
   height: ${props => props.height};
-  width: ${props => mapPropsToWidth(props.total)};
+  flex: 1;
   background: ${props => mapPropsToColor(props.isCompared, props.isSwapped)};
-  bottom: 0;
-  left: ${props => mapPropsToLeft(props.index, props.total)};
-  margin-left: ${props => mapPropsToMargin(props.total)};
-  margin-right: ${props => mapPropsToMargin(props.total)};
   transition: ${props => mapPropsToTransition(props.speed)};
-  color: white;
-  font-size: 24;
+  color: var(--background);
+  font-size: 2vw;
   font-family: Open Sans;
+  font-weight: bold;
   justify-content: center;
   align-items: center;
+  border-radius: 10px 10px 0 0;
   display: flex;
-  border: 1px solid white;
+  border: 1px solid var(--background);
 `;
 
-interface ContainerProps {
+interface IBarContainerProps {
   height: string;
   total: number;
-  index: number;
   isSwapped: boolean;
   isCompared: boolean;
   speed: string;
 }
 
-interface bar {
-  value: number;
-  isSwapped: boolean;
-  isCompared: boolean;
-}
-
-interface Props {
-  value: bar;
+interface IProps {
+  value: IBar;
   highest: number;
   index: number;
   speed: string;
 }
 
-const Bar: React.FC<Props> = ({ value: bar, highest, index, speed }) => {
+const Bar: React.FC<IProps> = ({ value: bar, highest, speed }) => {
   const height = `${Math.floor((bar.value / highest) * 100)}vh`;
+
   return (
     <Container
       height={height}
       total={highest}
-      index={index}
       isSwapped={bar.isSwapped}
       isCompared={bar.isCompared}
       speed={speed}
     >
-      {bar.value}
+      {highest < 50 ? bar.value : null}
     </Container>
   );
 };

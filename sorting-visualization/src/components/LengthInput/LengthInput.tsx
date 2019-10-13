@@ -2,20 +2,17 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { connect } from "react-redux";
 import { setArraySize } from "../../Actions";
+import { ISizeError } from "../../Constants/ActionTypes";
 
-interface SizeError {
-  arraySize: string | null;
-}
-
-interface State {
-  errors: SizeError;
+interface IState {
+  errors: ISizeError;
 }
 
 interface InputProps {
-  error: SizeError;
+  error: ISizeError;
 }
 
-const mapStateToProps = (state: State) => ({
+const mapStateToProps = (state: IState) => ({
   errors: state.errors
 });
 
@@ -26,17 +23,16 @@ const mapDispatchToProps = (dispatch: any) => ({
 const Wrapper = styled.div`
   flex: 1;
   width: 25vw;
-  margin-bottom: 6vh;
 `;
 const Title = styled.p`
   font-weight: bold;
   font-family: Open Sans;
   font-size: 16;
-  color: black;
+  color: var(--title);
 `;
 const Input = styled.input<InputProps>`
   padding: 0.5em;
-  background: white;
+  background: #ecfcff;
   border-radius: 4px;
   width: 90%;
   border: ${props => mapPropsToBorder(props.error)};
@@ -45,25 +41,25 @@ const Input = styled.input<InputProps>`
 const ErrorMsg = styled.p`
   font-family: Open Sans;
   font-size: 10;
-  color: red;
+  color: var(--compared);
   transition: all ease-in-out 0.3s;
 `;
 
-const mapPropsToBorder = (error: SizeError): string => {
+const mapPropsToBorder = (error: ISizeError): string => {
   if (error.arraySize !== null) {
-    return `2px solid red`;
+    return `2px solid var(--compared)`;
   }
   return `none`;
 };
 
-interface Props {
+interface IProps {
   setArraySize: (arraySize: string) => void;
-  errors: SizeError;
+  errors: ISizeError;
 }
 
-const LengthInput: React.FC<Props> = ({ setArraySize, errors }) => {
+const LengthInput: React.FC<IProps> = ({ setArraySize, errors }) => {
   const [arraySize, setLocalArraySize] = useState("10");
-  const changeSize = (e: any) => {
+  const changeSize = (e: React.ChangeEvent<HTMLInputElement>) => {
     setLocalArraySize(e.target.value);
     setArraySize(e.target.value);
   };

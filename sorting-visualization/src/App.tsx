@@ -6,6 +6,7 @@ import Playground from "./components/Playground";
 
 const AppWrapper = styled.div`
   display: flex;
+  height: 100vh;
 `;
 
 const App: React.FC = () => (

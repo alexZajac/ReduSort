@@ -2,18 +2,15 @@ import { SET_ARRAY_SIZE } from "../Constants/ActionTypes";
 import { setErrorArraySize } from "../Actions";
 import { MIN_SIZE, MAX_SIZE } from "../Constants/Utils";
 import { Dispatch } from "redux";
+import { ISizeError } from "../Constants/ActionTypes";
 
-interface ArrayError {
-  arraySize: string | null;
-}
-
-interface Middleware {
+interface IMiddleware {
   dispatch: Dispatch<any>;
   getState?: any;
 }
 
-const validateArraySize = (arraySize: string): ArrayError => {
-  const result: ArrayError = { arraySize: null };
+const validateArraySize = (arraySize: string): ISizeError => {
+  const result: ISizeError = { arraySize: null };
   const intSize = parseInt(arraySize);
   if (isNaN(intSize)) {
     result.arraySize = "This is not a number";
@@ -26,14 +23,14 @@ const validateArraySize = (arraySize: string): ArrayError => {
   return result;
 };
 
-export const arraySizeMiddleware = ({ dispatch }: Middleware) => (
+export const arraySizeMiddleware = ({ dispatch }: IMiddleware) => (
   next: any
 ) => (action: any) => {
   if (action.type !== SET_ARRAY_SIZE) {
     return next(action);
   }
   const { arraySize } = action.payload;
-  const errors: ArrayError = validateArraySize(arraySize);
+  const errors: ISizeError = validateArraySize(arraySize);
   if (errors.arraySize === null) {
     next(action);
   }

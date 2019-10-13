@@ -15,21 +15,30 @@ const Title = styled.p`
   font-weight: bold;
   font-family: Open Sans;
   font-size: 16;
-  color: black;
+  color: var(--title);
 `;
 const Input = styled.input`
-  padding: 0.5em;
-  background: transparent;
-  border: none;
-  border-radius: 4px;
+  appearance:none;
+  height: 1vh;
+  border-radius: 1em;
   width: 90%;
+  &::-webkit-slider-thumb {
+    appearance: none;
+    box-shadow: 0 0 80px 10px #888888;
+    width: 1.5rem;
+    height: 1.5rem;
+    background-color: var(--background);
+    border: .25rem solid var(--bar);
+    border-radius: 1rem
+    cursor: pointer;
+  }
 `;
 
-interface Props {
+interface IProps {
   setSpeed: (speed: string) => void;
 }
 
-const SpeedInput: React.FC<Props> = ({ setSpeed }) => {
+const SpeedInput: React.FC<IProps> = ({ setSpeed }) => {
   const [speed, setLocalSpeed] = useState("50");
 
   return (

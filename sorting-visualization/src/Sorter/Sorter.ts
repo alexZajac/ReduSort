@@ -1,25 +1,13 @@
-interface bar {
-  value: number;
-  isSwapped: boolean;
-  isCompared: boolean;
-}
-
-interface Action {
-  type: string;
-  first?: number;
-  second?: number;
-  index?: number;
-  value?: number;
-}
+import { IBar, IAction } from "../Constants/ActionTypes";
 
 export default class Sorter {
-  arr: Array<bar>;
+  arr: Array<IBar>;
 
-  constructor(array: Array<bar>) {
+  constructor(array: Array<IBar>) {
     this.arr = array;
   }
 
-  *bubbleSort(): IterableIterator<Action> {
+  *bubbleSort(): IterableIterator<IAction> {
     let n = this.arr.length;
     let arrayCopy = [...this.arr];
     for (let i = 0; i < n; i++) {
@@ -33,7 +21,7 @@ export default class Sorter {
     }
   }
 
-  *selectionSort(): IterableIterator<Action> {
+  *selectionSort(): IterableIterator<IAction> {
     let n = this.arr.length;
     let arrayCopy = [...this.arr];
     for (let i = 0; i < n; i++) {
@@ -52,7 +40,7 @@ export default class Sorter {
   *insertionSort(
     left: number = 0,
     right: number = this.arr.length
-  ): IterableIterator<Action> {
+  ): IterableIterator<IAction> {
     let arrayCopy = [...this.arr];
     for (let i = left + 1; i < right; i++) {
       const x = arrayCopy[i].value;
@@ -72,13 +60,13 @@ export default class Sorter {
     }
   }
 
-  *mergeSort(): IterableIterator<Action> {
+  *mergeSort(): IterableIterator<IAction> {
     function* merge(
-      arr: Array<bar>,
+      arr: Array<IBar>,
       left: number,
       mid: number,
       right: number
-    ): IterableIterator<Action> {
+    ): IterableIterator<IAction> {
       let start2 = mid + 1;
 
       if (arr[mid].value <= arr[start2].value) {
@@ -96,7 +84,7 @@ export default class Sorter {
 
           // Shift all the elements between element 1
           // element 2, right by 1.
-          while (index != left) {
+          while (index !== left) {
             yield { type: "changeValue", index, value: arr[index - 1].value };
             arr[index].value = arr[index - 1].value;
             index--;
@@ -113,10 +101,10 @@ export default class Sorter {
     }
 
     function* _mergeSort(
-      arr: Array<bar>,
+      arr: Array<IBar>,
       left: number,
       right: number
-    ): IterableIterator<Action> {
+    ): IterableIterator<IAction> {
       if (left < right) {
         const mid = Math.floor((left + right) / 2);
         yield* _mergeSort(arr, 0, mid);
@@ -129,12 +117,12 @@ export default class Sorter {
     yield* _mergeSort(arr, 0, arr.length - 1);
   }
 
-  *quickSort(): IterableIterator<Action> {
+  *quickSort(): IterableIterator<IAction> {
     function* _quickSort(
-      arr: Array<bar>,
+      arr: Array<IBar>,
       first: number = 0,
       last: number = arr.length - 1
-    ): IterableIterator<Action> {
+    ): IterableIterator<IAction> {
       if (first < last) {
         let pivot = arr[last].value;
         let i = first - 1;
@@ -220,17 +208,17 @@ export default class Sorter {
     }
   }
 
-  *timSort(RUN: number = 32): IterableIterator<Action> {
+  *timSort(RUN: number = 32): IterableIterator<IAction> {
     function* _merge(
-      arr: Array<bar>,
+      arr: Array<IBar>,
       leftIndex: number,
       midIndex: number,
       rightIndex: number
-    ): IterableIterator<Action> {
+    ): IterableIterator<IAction> {
       const len1 = midIndex - leftIndex + 1,
         len2 = rightIndex - midIndex;
-      let left: Array<bar> = [],
-        right: Array<bar> = [];
+      let left: Array<IBar> = [],
+        right: Array<IBar> = [];
       for (let i = 0; i < len1; i++) {
         left.push(arr[leftIndex + i]);
       }
@@ -285,14 +273,17 @@ export default class Sorter {
     }
   }
 
-  *heapSort(): IterableIterator<Action> {
+  *heapSort(): IterableIterator<IAction> {
     interface heapArray {
-      values: Array<bar>;
+      values: Array<IBar>;
       heapSize: number;
     }
     const _right = (i: number): number => 2 * i + 2;
     const _left = (i: number): number => 2 * i + 1;
-    function* _maxHeapify(arr: heapArray, i: number): IterableIterator<Action> {
+    function* _maxHeapify(
+      arr: heapArray,
+      i: number
+    ): IterableIterator<IAction> {
       const l = _left(i);
       const r = _right(i);
       let largest = i;
@@ -317,13 +308,13 @@ export default class Sorter {
         yield* _maxHeapify(arr, largest);
       }
     }
-    function* _buildMaxHeap(arr: heapArray): IterableIterator<Action> {
+    function* _buildMaxHeap(arr: heapArray): IterableIterator<IAction> {
       arr.heapSize = arr.values.length;
       for (let i = Math.floor(arr.values.length / 2); i >= 0; i--) {
         yield* _maxHeapify(arr, i);
       }
     }
-    function* _heapSort(arr: heapArray): IterableIterator<Action> {
+    function* _heapSort(arr: heapArray): IterableIterator<IAction> {
       yield* _buildMaxHeap(arr);
       for (let i = arr.values.length - 1; i > 0; i--) {
         yield { type: "swap", first: 0, second: i };

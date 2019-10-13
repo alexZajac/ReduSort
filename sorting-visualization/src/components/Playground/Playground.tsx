@@ -1,72 +1,61 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useCallback } from "react";
 import { connect } from "react-redux";
 import styled from "styled-components";
 import Bar from "../Bar";
 import { setBars } from "../../Actions";
+import { IBar, IAction } from "../../Constants/ActionTypes";
 
-interface Action {
-  type: string;
-  first: number;
-  second: number;
-  index: number;
-  value: number;
-}
-
-interface Props {
-  bars: Array<bar>;
-  setBars: (bars: Array<bar>) => void;
-  nextAction: Action | null;
+interface IProps {
+  bars: Array<IBar>;
+  setBars: (bars: Array<IBar>) => void;
+  nextAction: IAction | null;
   speed: string;
 }
 
-interface State {
-  bars: Array<bar>;
-  nextAction: Action | null;
+interface IState {
+  bars: Array<IBar>;
+  nextAction: IAction | null;
   speed: string;
 }
 
-interface bar {
-  value: number;
-  isSwapped: boolean;
-  isCompared: boolean;
-}
-
-const mapStateToProps = (state: State) => ({
+const mapStateToProps = (state: IState) => ({
   bars: state.bars,
   nextAction: state.nextAction,
   speed: state.speed
 });
 
 const mapDispatchToProps = (dispatch: any) => ({
-  setBars: (bars: Array<bar>) => dispatch(setBars({ bars }))
+  setBars: (bars: Array<IBar>) => dispatch(setBars({ bars }))
 });
 
 const Wrapper = styled.div`
   width: 75vw;
   height: 100vh;
-  background: white;
+  background: var(--background);
+  align-items: flex-end;
+  display: flex;
 `;
 
-const Playground: React.FC<Props> = ({ bars, setBars, nextAction, speed }) => {
+const Playground: React.FC<IProps> = ({ bars, setBars, nextAction, speed }) => {
   useEffect(() => {
     if (nextAction !== null && nextAction !== undefined) {
       if (nextAction.type === "comparison") {
         let barArray = [...bars];
-        barArray[nextAction.first].isCompared = true;
-        barArray[nextAction.second].isCompared = true;
+        barArray[nextAction.first!].isCompared = true;
+        barArray[nextAction.second!].isCompared = true;
         setBars(barArray);
       } else if (nextAction.type === "swapColors") {
         let barArray = [...bars];
-        barArray[nextAction.first].isCompared = false;
-        barArray[nextAction.second].isCompared = false;
-        barArray[nextAction.first].isSwapped = true;
-        barArray[nextAction.second].isSwapped = true;
+        barArray[nextAction.first!].isCompared = false;
+        barArray[nextAction.second!].isCompared = false;
+        barArray[nextAction.first!].isSwapped = true;
+        barArray[nextAction.second!].isSwapped = true;
         setBars(barArray);
       } else if (nextAction.type === "swap") {
         let barArray = [...bars];
-        let temp = barArray[nextAction.first];
-        barArray[nextAction.first] = barArray[nextAction.second];
-        barArray[nextAction.second] = temp;
+        let temp = barArray[nextAction.first!];
+        barArray[nextAction.first!] = barArray[nextAction.second!];
+        barArray[nextAction.second!] = temp;
         setBars(barArray);
       } else if (nextAction.type === "clean") {
         let barArray = [...bars];
@@ -77,12 +66,12 @@ const Playground: React.FC<Props> = ({ bars, setBars, nextAction, speed }) => {
         setBars(barArray);
       } else if (nextAction.type === "changeValue") {
         let barArray = [...bars];
-        barArray[nextAction.index].value = nextAction.value;
-        barArray[nextAction.index].isSwapped = true;
+        barArray[nextAction.index!].value = nextAction.value!;
+        barArray[nextAction.index!].isSwapped = true;
         setBars(barArray);
       }
     }
-  }, [nextAction]);
+  }, [nextAction, setBars]);
 
   return (
     <Wrapper>

@@ -7,7 +7,8 @@ import {
   SET_ARRAY_SIZE,
   SET_ERROR_ARRAY_SIZE,
   SET_ACTIONS,
-  SET_NEXT_ACTION
+  SET_NEXT_ACTION,
+  SET_SWITCH
 } from "../Constants/ActionTypes";
 import { sleep, interpolateSpeed } from "../Constants/Utils";
 
@@ -21,9 +22,9 @@ export const startSorting = (payload: object) => async (
   });
   const { actions } = getState();
   if (actions !== null) {
-    let { shouldSort, nextAction, speed } = getState();
+    let { shouldSort, speed } = getState();
     while (shouldSort) {
-      const newAction = actions.next();
+      let newAction = actions.next();
       const payload = newAction.value;
       if (payload === undefined) {
         const cleanAction = {
@@ -63,7 +64,7 @@ export const startSorting = (payload: object) => async (
       await sleep(interpolateSpeed(speed));
       let newState = getState();
       shouldSort = newState.shouldSort;
-      nextAction = newState.nextAction;
+      newAction = newState.nextAction;
       speed = newState.speed;
     }
   }
@@ -71,6 +72,11 @@ export const startSorting = (payload: object) => async (
 
 export const setBars = (payload: object) => ({
   type: SET_BARS,
+  payload
+});
+
+export const setSwitch = (payload: object) => ({
+  type: SET_SWITCH,
   payload
 });
 

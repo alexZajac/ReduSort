@@ -7,42 +7,51 @@ import {
   SET_ARRAY_SIZE,
   SET_ERROR_ARRAY_SIZE,
   SET_ACTIONS,
-  SET_NEXT_ACTION
+  SET_NEXT_ACTION,
+  SET_SWITCH
 } from "../Constants/ActionTypes";
 import { generateArrayFromOptions } from "../Constants/Utils";
 import Sorter from "../Sorter";
+import { IBar, IAction } from "../Constants/ActionTypes";
 
-interface bar {
-  value: number;
-  isSwapped: boolean;
-  isCompared: boolean;
-}
-
-interface Action {
-  type: string;
-  first?: number;
-  second?: number;
-  index?: number;
-  value?: number;
-}
-
-interface State {
-  bars: Array<bar>;
+interface IState {
+  bars: Array<IBar>;
   shouldSort: boolean;
   speed: string;
   algorithm: string;
   initialArray: string;
   arraySize: string;
-  actions: IterableIterator<Action> | null;
-  nextAction: Action | null;
+  isDark: boolean;
+  actions: IterableIterator<IAction> | null;
+  nextAction: IAction | null;
   errors: object;
 }
 
-const getSortingGenerator = (algorithm: string, s: Sorter) => {
-  return s.heapSort();
+const getSortingGenerator = (
+  algorithm: string,
+  s: Sorter
+): IterableIterator<IAction> | null => {
+  switch (algorithm) {
+    case "Bubble Sort":
+      return s.bubbleSort();
+    case "Insertion Sort":
+      return s.insertionSort();
+    case "Selection Sort":
+      return s.selectionSort();
+    case "Merge Sort":
+      return s.mergeSort();
+    case "Heap Sort":
+      return s.heapSort();
+    case "Quick Sort":
+      return s.quickSort();
+    case "Tim Sort":
+      return s.timSort();
+    default:
+      return null;
+  }
 };
 
-const initialState: State = {
+const initialState: IState = {
   bars: generateArrayFromOptions("10", "Random"),
   shouldSort: false,
   speed: "50",
@@ -50,13 +59,14 @@ const initialState: State = {
   initialArray: "Random",
   arraySize: "10",
   actions: null,
+  isDark: true,
   nextAction: null,
   errors: {
     arraySize: null
   }
 };
 
-const rootReducer = (state = initialState, action: any): State => {
+const rootReducer = (state = initialState, action: any): IState => {
   if (action.type === START_SORTING) {
     const { shouldSort } = action.payload;
     let actions = null;
@@ -75,6 +85,9 @@ const rootReducer = (state = initialState, action: any): State => {
   } else if (action.type === SET_SPEED) {
     const { speed } = action.payload;
     return { ...state, speed };
+  } else if (action.type === SET_SWITCH) {
+    const { isDark } = action.payload;
+    return { ...state, isDark };
   } else if (action.type === SET_ALGORITHM) {
     const { algorithm } = action.payload;
     return { ...state, algorithm };
@@ -100,7 +113,9 @@ const rootReducer = (state = initialState, action: any): State => {
     const { actions } = action.payload;
     return { ...state, actions };
   } else if (action.type === SET_NEXT_ACTION) {
-    const nextAction = action.payload;
+    let nextAction = action.payload;
+    const { shouldSort } = state;
+    if (!shouldSort) nextAction = null;
     return { ...state, nextAction };
   }
   return state;

@@ -6,13 +6,13 @@ import LengthInput from "../LengthInput";
 import SortInput from "../SortInput";
 import SpeedInput from "../SpeedInput";
 import StartButton from "../StartButton";
+import Switch from "../Switch";
 
 const Wrapper = styled.div`
-  height: 100vh;
+  height: 94vh;
   width: 25vw;
-  background: #999999;
-  border-right: 2px solid black;
-  padding: 1em;
+  background: var(--sidebar);
+  padding: 3vh;
 `;
 const TitleWrapper = styled.div`
   align-items: center;
@@ -21,34 +21,25 @@ const TitleWrapper = styled.div`
 `;
 const Title = styled.p`
   text-transform: uppercase;
-  font-size: 2em;
+  font-size: 2vw;
   letter-spacing: 2px;
-  color: white;
+  color: var(--bar);
   font-weight: bold;
   font-family: Open Sans;
   text-align: center;
 `;
 
-interface Props {
-  // initial: [string, (initial: string) => void];
-  // speed: [string, (speed: string) => void];
-  // sorting: [string, (sorting: string) => void];
-  // length: [string, (length: string) => void];
-  // startSorting: [boolean, (startSorting: boolean) => void];
-}
-
-const Sidebar: React.FC<Props> = props => {
-  return (
-    <Wrapper>
-      <TitleWrapper>
-        <Title>Sorting Visualization</Title>
-      </TitleWrapper>
-      <LengthInput />
-      <ArrayInput />
-      <SortInput />
-      <SpeedInput />
-      <StartButton />
-    </Wrapper>
-  );
-};
+const Sidebar: React.FC<{}> = () => (
+  <Wrapper>
+    <TitleWrapper>
+      <Title>Sorting Visualization</Title>
+    </TitleWrapper>
+    <Switch />
+    <LengthInput />
+    <ArrayInput />
+    <SortInput />
+    <SpeedInput />
+    <StartButton />
+  </Wrapper>
+);
 export default Sidebar;

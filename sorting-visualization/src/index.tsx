@@ -5,10 +5,13 @@ import store from "./Store";
 import "./index.css";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
+import ThemeProvider from "./components/ThemeContext/ThemeContext";
 
 ReactDOM.render(
   <Provider store={store}>
-    <App />
+    <ThemeProvider>
+      <App />
+    </ThemeProvider>
   </Provider>,
   document.getElementById("root")
 );
