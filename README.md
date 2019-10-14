@@ -1,7 +1,7 @@
 # ReduSort | A sort visualization app made with React-Redux and TypeScript.
 
 ## Demo 
-![demo](https://raw.githubusercontent.com/alexZajac/ReduSort/master/public/demo.gif)
+![demo](./public/demo.gif)
 
 ## Options
 - Array Length: From 1 to 100.
