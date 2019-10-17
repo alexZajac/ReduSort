@@ -19,6 +19,6 @@
 
 ## Stack
 - The project was initialized with CRNA and a TypeScript configuration. 
-- The challenge (expecially for large inputs) was to allow the user to visualize the sorting process step by step without having tp hold all the steps in memory. So the design choice was to rewrite each sort function into a generator function, to get steps only if needed. 
+- The challenge (expecially for large inputs) was to allow the user to visualize the sorting process step by step without having to hold all the steps in memory. So the design choice was to rewrite each sort function into a generator function, to get steps only if needed. 
 - That is also where Redux comes into play, providing a global store to the app, easing the process of processing and displaying sorting steps coming from the generator functions.
  

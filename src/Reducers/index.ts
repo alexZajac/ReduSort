@@ -59,7 +59,7 @@ const initialState: IState = {
   initialArray: "Random",
   arraySize: "10",
   actions: null,
-  isDark: true,
+  isDark: false,
   nextAction: null,
   errors: {
     arraySize: null
@@ -71,7 +71,7 @@ const rootReducer = (state = initialState, action: any): IState => {
     const { shouldSort } = action.payload;
     let actions = null;
     let nextAction = null;
-    let bars = state.bars;
+    let { bars } = state;
     if (shouldSort) {
       const { algorithm } = state;
       const s = new Sorter(bars);
@@ -90,15 +90,30 @@ const rootReducer = (state = initialState, action: any): IState => {
     return { ...state, isDark };
   } else if (action.type === SET_ALGORITHM) {
     const { algorithm } = action.payload;
-    return { ...state, algorithm };
+    const bars = generateArrayFromOptions(state.arraySize, state.initialArray);
+    const s = new Sorter(bars);
+    const actions = getSortingGenerator(algorithm, s);
+    const shouldSort = false;
+    const nextAction = null;
+    return { ...state, algorithm, bars, actions, shouldSort, nextAction };
   } else if (action.type === SET_INITIAL_ARRAY) {
     const { initialArray } = action.payload;
     const bars = generateArrayFromOptions(state.arraySize, initialArray);
-    return { ...state, initialArray, bars };
+    const s = new Sorter(bars);
+    const { algorithm } = state;
+    const actions = getSortingGenerator(algorithm, s);
+    const shouldSort = false;
+    const nextAction = null;
+    return { ...state, initialArray, bars, actions, shouldSort, nextAction };
   } else if (action.type === SET_ARRAY_SIZE) {
     const { arraySize } = action.payload;
     const bars = generateArrayFromOptions(arraySize, state.initialArray);
-    return { ...state, arraySize, bars };
+    const { algorithm } = state;
+    const s = new Sorter(bars);
+    const actions = getSortingGenerator(algorithm, s);
+    const shouldSort = false;
+    const nextAction = null;
+    return { ...state, arraySize, bars, actions, shouldSort, nextAction};
   } else if (action.type === SET_ERROR_ARRAY_SIZE) {
     const errors = action.payload;
     const bars =
