@@ -211,57 +211,48 @@ export default class Sorter {
   *timSort(RUN: number = 32): IterableIterator<IAction> {
     function* _merge(
       arr: Array<IBar>,
-      leftIndex: number,
-      midIndex: number,
-      rightIndex: number
+      left: number,
+      mid: number,
+      right: number
     ): IterableIterator<IAction> {
-      const len1 = midIndex - leftIndex + 1,
-        len2 = rightIndex - midIndex;
-      let left: Array<IBar> = [],
-        right: Array<IBar> = [];
-      for (let i = 0; i < len1; i++) {
-        left.push(arr[leftIndex + i]);
-      }
-      for (let i = 0; i < len2; i++) {
-        right.push(arr[rightIndex + i]);
+      let start2 = mid + 1;
+
+      if (arr[mid].value <= arr[start2].value) {
+        return;
       }
 
-      let li = 0,
-        ri = 0,
-        k = leftIndex;
-      while (li < len1 && ri < len2) {
-        yield { type: "comparison", first: li, second: ri };
-        if (left[li].value < right[ri].value) {
-          yield { type: "changeValue", index: k, value: left[li].value };
-          arr[k] = left[li];
-          li++;
+      while (left <= mid && start2 <= right) {
+        // If element 1 is in right place
+        yield { type: "comparison", first: left, second: start2 };
+        if (arr[left].value <= arr[start2].value) {
+          left++;
         } else {
-          yield { type: "changeValue", index: k, value: right[ri].value };
-          arr[k] = right[ri];
-          ri++;
+          const value = arr[start2].value;
+          let index = start2;
+
+          // Shift all the elements between element 1
+          // element 2, right by 1.
+          while (index !== left) {
+            yield { type: "changeValue", index, value: arr[index - 1].value };
+            arr[index].value = arr[index - 1].value;
+            index--;
+          }
+          yield { type: "changeValue", index: left, value };
+          arr[left].value = value;
+
+          // Update all the pointers
+          left++;
+          mid++;
+          start2++;
         }
-        k++;
-      }
-      while (li < len1) {
-        yield { type: "changeValue", index: k, value: left[li].value };
-        arr[k] = left[li];
-        li++;
-        k++;
-      }
-      while (ri < len2) {
-        yield { type: "changeValue", index: k, value: right[ri].value };
-        arr[k] = right[ri];
-        ri++;
-        k++;
       }
     }
 
     const arr = [...this.arr];
     const n = arr.length;
     for (let i = 0; i < n; i += RUN) {
-      yield* this.insertionSort(i, Math.min(i + 31, n));
+      yield* this.insertionSort(i, Math.min(i + RUN + 1, n));
     }
-
     let size = RUN;
     while (size < n) {
       for (let left = 0; left < n; left += 2 * size) {
