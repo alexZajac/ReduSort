@@ -1,5 +1,7 @@
 # ReduSort | A sort visualization app made with React-Redux and TypeScript.
 
+<!---https://raw.githubusercontent.com/alexZajac/ReduSort/master/public/demo.gif-->
+
 ## Demo 
 ![demo](./public/demo.gif)
 
