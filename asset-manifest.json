@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/ReduSort/static/css/main.609c87f7.chunk.css",
-    "main.js": "/ReduSort/static/js/main.1f9a711c.chunk.js",
-    "main.js.map": "/ReduSort/static/js/main.1f9a711c.chunk.js.map",
+    "main.css": "/ReduSort/static/css/main.872b9770.chunk.css",
+    "main.js": "/ReduSort/static/js/main.81a6184d.chunk.js",
+    "main.js.map": "/ReduSort/static/js/main.81a6184d.chunk.js.map",
     "runtime~main.js": "/ReduSort/static/js/runtime~main.5b3a3a4d.js",
     "runtime~main.js.map": "/ReduSort/static/js/runtime~main.5b3a3a4d.js.map",
     "static/js/2.90fac599.chunk.js": "/ReduSort/static/js/2.90fac599.chunk.js",
     "static/js/2.90fac599.chunk.js.map": "/ReduSort/static/js/2.90fac599.chunk.js.map",
     "index.html": "/ReduSort/index.html",
-    "precache-manifest.4fb40c61a11d981a5512271c13a93ea7.js": "/ReduSort/precache-manifest.4fb40c61a11d981a5512271c13a93ea7.js",
+    "precache-manifest.3ffc931a38f24870acf401cf94f48c1c.js": "/ReduSort/precache-manifest.3ffc931a38f24870acf401cf94f48c1c.js",
     "service-worker.js": "/ReduSort/service-worker.js",
-    "static/css/main.609c87f7.chunk.css.map": "/ReduSort/static/css/main.609c87f7.chunk.css.map"
+    "static/css/main.872b9770.chunk.css.map": "/ReduSort/static/css/main.872b9770.chunk.css.map"
   }
 }

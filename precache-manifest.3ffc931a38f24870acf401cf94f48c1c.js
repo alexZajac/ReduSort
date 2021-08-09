@@ -1,19 +1,19 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "3172907ec5c427b5ee21ba32df210e5c",
+    "revision": "1690b95dc24e1eed8106d720ee2d95fc",
     "url": "/ReduSort/index.html"
   },
   {
-    "revision": "8cb47f867e8ac4bc8163",
-    "url": "/ReduSort/static/css/main.609c87f7.chunk.css"
+    "revision": "8158205158e620846ca8",
+    "url": "/ReduSort/static/css/main.872b9770.chunk.css"
   },
   {
     "revision": "f3c54cf29c28548f28e5",
     "url": "/ReduSort/static/js/2.90fac599.chunk.js"
   },
   {
-    "revision": "8cb47f867e8ac4bc8163",
-    "url": "/ReduSort/static/js/main.1f9a711c.chunk.js"
+    "revision": "8158205158e620846ca8",
+    "url": "/ReduSort/static/js/main.81a6184d.chunk.js"
   },
   {
     "revision": "29db6afea4a35f7326b2",
