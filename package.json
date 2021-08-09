@@ -13,7 +13,7 @@
     "redux-thunk": "^2.3.0",
     "styled-components": "^4.3.2",
     "tslint": "^5.20.0",
-    "typescript": "^3.6.3"
+    "typescript": "^3.9.10"
   },
   "scripts": {
     "start": "react-scripts start",

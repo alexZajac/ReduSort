@@ -1,10 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import {
-  interpolateSpeed,
-  useWindowDimensions,
-  MIN_VALUE_DISPLAY_FACTOR
-} from "../../Constants/Utils";
+import { interpolateSpeed } from "../../Constants/Utils";
 import { IBar } from "../../Constants/ActionTypes";
 
 const mapPropsToColor = (isCompared: boolean, isSwapped: boolean): string => {
@@ -23,10 +19,10 @@ const mapPropsToTransition = (speed: string): string => {
 };
 
 const Container = styled.div<IBarContainerProps>`
-  height: ${props => props.height};
+  height: ${(props) => props.height};
   flex: 1;
-  background: ${props => mapPropsToColor(props.isCompared, props.isSwapped)};
-  transition: ${props => mapPropsToTransition(props.speed)};
+  background: ${(props) => mapPropsToColor(props.isCompared, props.isSwapped)};
+  transition: ${(props) => mapPropsToTransition(props.speed)};
   color: var(--background);
   font-size: 2vw;
   font-family: Open Sans;

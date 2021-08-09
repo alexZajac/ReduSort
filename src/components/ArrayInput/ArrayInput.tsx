@@ -8,12 +8,12 @@ interface IState {
 }
 
 const mapStateToProps = (state: IState) => ({
-  initialArray: state.initialArray
+  initialArray: state.initialArray,
 });
 
 const mapDispatchToProps = (dispatch: any) => ({
   setInitialArray: (initialArray: string) =>
-    dispatch(setInitialArray({ initialArray }))
+    dispatch(setInitialArray({ initialArray })),
 });
 
 const Wrapper = styled.div`
@@ -22,7 +22,7 @@ const Wrapper = styled.div`
 `;
 const Title = styled.p`
   font-weight: bold;
-  font-family: Open Sans;
+  font-family: ;
   font-size: 16;
   color: var(--title);
 `;
@@ -37,7 +37,7 @@ const Select = styled.select`
 enum initialType {
   NS = "Nearly Sorted",
   IS = "Reversed",
-  RD = "Random"
+  RD = "Random",
 }
 
 interface IProps {
@@ -52,7 +52,7 @@ const ArrayInput: React.FC<IProps> = ({ setInitialArray, initialArray }) => (
     <Title>Initial Array</Title>
     <Select
       value={initialArray}
-      onChange={e => setInitialArray(e.target.value)}
+      onChange={(e) => setInitialArray(e.target.value)}
     >
       {types.map((t, i) => (
         <option key={i} value={t}>
@@ -63,7 +63,4 @@ const ArrayInput: React.FC<IProps> = ({ setInitialArray, initialArray }) => (
   </Wrapper>
 );
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(ArrayInput);
+export default connect(mapStateToProps, mapDispatchToProps)(ArrayInput);

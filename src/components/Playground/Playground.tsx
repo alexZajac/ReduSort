@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback } from "react";
+import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import styled from "styled-components";
 import Bar from "../Bar";
@@ -21,11 +21,11 @@ interface IState {
 const mapStateToProps = (state: IState) => ({
   bars: state.bars,
   nextAction: state.nextAction,
-  speed: state.speed
+  speed: state.speed,
 });
 
 const mapDispatchToProps = (dispatch: any) => ({
-  setBars: (bars: Array<IBar>) => dispatch(setBars({ bars }))
+  setBars: (bars: Array<IBar>) => dispatch(setBars({ bars })),
 });
 
 const Wrapper = styled.div`
@@ -59,7 +59,7 @@ const Playground: React.FC<IProps> = ({ bars, setBars, nextAction, speed }) => {
         setBars(barArray);
       } else if (nextAction.type === "clean") {
         let barArray = [...bars];
-        barArray.forEach(b => {
+        barArray.forEach((b) => {
           b.isCompared = false;
           b.isSwapped = false;
         });
@@ -71,7 +71,7 @@ const Playground: React.FC<IProps> = ({ bars, setBars, nextAction, speed }) => {
         setBars(barArray);
       }
     }
-  }, [nextAction, setBars]);
+  }, [bars, nextAction, setBars]);
 
   return (
     <Wrapper>
@@ -82,7 +82,4 @@ const Playground: React.FC<IProps> = ({ bars, setBars, nextAction, speed }) => {
   );
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Playground);
+export default connect(mapStateToProps, mapDispatchToProps)(Playground);
